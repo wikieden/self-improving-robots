@@ -11,7 +11,7 @@
 
 先讲清楚什么叫递归自改进（RSI = Recursive Self-Improvement，递归 / 自我 / 改进）和最小的"生成 → 筛选 → 训练"闭环；再看 Agentic VLA 怎么拆任务、调技能、训练规划器，WAM 和 Agentic WAM 怎么把计划、想象和动作放进一个模型；然后把闭环里每一环拆开：奖励从哪来、谁来重置场景、练什么、技能库怎么自己长大、怎么在想象里练、世界模型怎么自己改进；最后讲风险和"怎样才算证明了递归增益"。
 
-- **适合谁**：读过本仓库 VLA 讲义前几章，知道策略、动作块、flow matching 是什么；RL 只要知道"奖励、优势"这两个词，细节链接到 强化学习讲义。
+- **适合谁**：读过本仓库 [VLA 讲义](https://wikieden.github.io/vla-from-scratch/lessons/index.html)前几章，知道策略、动作块、flow matching 是什么；RL 只要知道"奖励、优势"这两个词，细节链接到 [强化学习讲义](https://wikieden.github.io/rl-from-scratch/lessons/index.html)。
 - **读完能做什么**：拿到一篇"self-improving / self-evolving robot"论文，能判断它在四个层级的哪一层、被改进的是什么、证据够不够；做 学习计划 的里程碑 AR-M0–AR-M7。
 
 ## 示例动画
