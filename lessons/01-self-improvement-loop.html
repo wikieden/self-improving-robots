@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第 1 章 · 全景：RL 怎样让 VLA / WAM 自己变强 · RSI 与 WAM/VLA</title>
+<style>
+:root{--bg:#fbfbfa;--fg:#1f2328;--mute:#5d6470;--line:#e3e5e8;--card:#fff;--acc:#2f6fdf;--code:#f2f3f5;--quote:#f4f6fa}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15181d;--fg:#e4e7ec;--mute:#9aa3b2;--line:#2c323b;--card:#1c2026;--acc:#7aa7ff;--code:#22272f;--quote:#1b2029}}
+:root[data-theme="dark"]{--bg:#15181d;--fg:#e4e7ec;--mute:#9aa3b2;--line:#2c323b;--card:#1c2026;--acc:#7aa7ff;--code:#22272f;--quote:#1b2029}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.75 -apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Helvetica Neue",sans-serif}
+a{color:var(--acc)}
+header.top{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+header.top .in{max-width:860px;margin:0 auto;padding:10px 16px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;font-size:14px}
+header.top .brand{font-weight:600;color:var(--fg);text-decoration:none;margin-right:auto}
+header.top a{text-decoration:none}
+main{max-width:860px;margin:0 auto;padding:24px 16px 72px;overflow-wrap:anywhere}
+h1{font-size:28px;line-height:1.35;margin:8px 0 16px} h2{font-size:22px;margin:40px 0 12px;padding-top:8px;border-top:1px solid var(--line)} h3{font-size:18px;margin:28px 0 8px}
+img{max-width:100%;height:auto;border-radius:8px;border:1px solid var(--line);background:#fff}
+blockquote{margin:16px 0;padding:10px 16px;background:var(--quote);border-left:3px solid var(--acc);border-radius:4px;color:var(--mute)}
+blockquote p{margin:4px 0}
+code{background:var(--code);padding:1px 5px;border-radius:4px;font-size:.9em}
+pre{background:var(--code);padding:12px 14px;border-radius:8px;overflow-x:auto} pre code{padding:0;background:none}
+table{border-collapse:collapse;display:block;overflow-x:auto;max-width:100%;margin:12px 0;font-size:15px}
+th,td{border:1px solid var(--line);padding:6px 10px;vertical-align:top} th{background:var(--code)}
+details{border:1px solid var(--line);border-radius:8px;padding:6px 12px;margin:8px 0;background:var(--card)}
+details[open]{padding-bottom:10px} summary{cursor:pointer;color:var(--acc);font-weight:500}
+mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+.btn{display:inline-block;margin:4px 8px 4px 0;padding:6px 14px;border:1px solid var(--acc);border-radius:999px;text-decoration:none;font-size:14px}
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:15px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin:16px 0}
+.card{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;color:inherit;text-decoration:none}
+.card:hover{border-color:var(--acc)} .card img{border:0;border-bottom:1px solid var(--line);border-radius:0;aspect-ratio:16/10;object-fit:contain;width:100%}
+.card .no{color:var(--mute);font-size:13px;padding:8px 12px 0} .card .t{padding:0 12px 12px;font-weight:500;line-height:1.5}
+.lead{font-size:17px;color:var(--mute)}
+footer{max-width:860px;margin:0 auto;padding:0 16px 40px;color:var(--mute);font-size:13px}
+</style>
+<script>window.MathJax={tex:{inlineMath:[["\\(","\\)"]],displayMath:[["\\[","\\]"],["$$","$$"]],processEscapes:true,processEnvironments:true}};</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+</head><body>
+<header class="top"><div class="in">
+<a class="brand" href="../index.html">RSI 与 WAM/VLA</a>
+<a href="../lessons/index.html">讲义目录</a>
+<a href="../animations/index.html">动画</a>
+<a href="../review.html">复习卡片</a>
+<a href="../lessons/appendix-glossary.html">缩写表</a>
+<a href="https://wikieden.github.io/ai-books/">← 全部讲义书</a>
+</div></header>
+<main>
+<h1 id="1-rl-vla-wam">第 1 章 · 全景：RL 怎样让 VLA / WAM 自己变强</h1><p><a class="btn" href="../animations/01-self-improvement-loop.html">▶ 打开本章可交互动画</a></p>
+<blockquote>
+<p>本章回答：机器人开发里，VLA 和 WAM 是怎么用强化学习变强的？这件事和最近说的 Agentic、递归自改进（RSI）是什么关系？读一篇"self-improving robot"论文时，先问哪几个问题？<br />
+讲解日期：2026-11-20 · 上一章：无 · 下一章：第 2 章 最小自改进闭环（待写）<br />
+对应原文：本章是全景，引用的都是摘要和引言，方法细节留到后面各章逐节核对。行号以 <code>materials/text/papers/*.txt</code> 为准；π*0.6 RECAP 和 SimpleVLA-RL 的文本在 <code>vla-deep-dive/materials/text/papers/</code>。<br />
+本章缩写：VLA = Vision-Language-Action（视觉 / 语言 / 动作）；WAM = World Action Model（世界 / 动作 / 模型）；RL = Reinforcement Learning（强化 / 学习）；RSI = Recursive Self-Improvement（递归 / 自我 / 改进）；VLM = Vision-Language Model（视觉 / 语言 / 模型）；IL = Imitation Learning（模仿 / 学习）；BC = Behavior Cloning（行为 / 克隆）；SFT = Supervised Fine-Tuning（有监督 / 微调）；PPO = Proximal Policy Optimization（近端 / 策略 / 优化）；GRPO = Group Relative Policy Optimization（组内 / 相对 / 策略优化）；AWR = Advantage-Weighted Regression（优势 / 加权 / 回归）；IDM = Inverse Dynamics Model（逆 / 动力学 / 模型）；RECAP = RL with Experience and Corrections via Advantage-conditioned Policies（经验与纠正 / 优势条件策略的 RL）；PLD = Probe, Learn, Distill（探测 / 学习 / 蒸馏）；EAP = Entangled Action Pairs（纠缠 / 动作 / 对）；EFM = Embodied Foundation Model（具身 / 基础 / 模型）；WAV = World Action Verifier（世界 / 动作 / 验证器）；MERL = Model-Evolving Reinforcement Learning（模型 / 进化 / 强化学习）；IG-RFT = Interaction-Guided Reinforced Fine-Tuning（交互 / 引导 / 强化微调）；SC-VLA = Self-Correcting VLA（自我纠正 VLA）；STaR = Self-Taught Reasoner（自学 / 推理者）。全部缩写见 <a href="../lessons/appendix-glossary.html">附录 · 缩写与术语表</a>。</p>
+</blockquote>
+<h2 id="_1">讲解</h2>
+<h3 id="2026-11-20">第一步：一个闭环，三个问题（2026-11-20）</h3>
+<p><strong>类比：学生刷题。</strong> 做一套题 → 对答案，只把做对的题（或改对的错题）抄进笔记 → 照着笔记复习。下一轮再做题时，人已经变强，做出来的题也更好。机器人的 RL 也是这个循环。</p>
+<div class="arithmatex">\[\theta_{k+1} = \mathrm{Update}\big(\theta_k,\ \mathrm{Filter}(\mathrm{Generate}(\theta_k))\big)\]</div>
+<ul>
+<li><span class="arithmatex">\(\theta_k\)</span>（读作"西塔 k"）：第 <span class="arithmatex">\(k\)</span> 轮的模型参数。被更新的不一定是 VLA 权重，也可以是技能库、规划器、世界模型。</li>
+<li><span class="arithmatex">\(\mathrm{Generate}\)</span>：用当前模型产生经验（真机、仿真或想象里的一次次尝试）。</li>
+<li><span class="arithmatex">\(\mathrm{Filter}\)</span>：打分筛选（成功 / 失败、进度高 / 低）。</li>
+<li><span class="arithmatex">\(\mathrm{Update}\)</span>：用筛过的经验更新自己。</li>
+</ul>
+<p><strong>例子</strong>（数是编的）：机器人试了 10 次，成功 4 次。只留这 4 条轨迹做 BC，新策略更像"成功的那 4 次"。下一轮可能成功 6 次，再留 6 条……</p>
+<p>读任何一篇论文，先问这三个问题：</p>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>可能的答案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>经验从哪来</td>
+<td>真机、仿真、世界模型的想象</td>
+</tr>
+<tr>
+<td>分数从哪来</td>
+<td>0/1 成功、进度模型、价值模型、VLM 判官</td>
+</tr>
+<tr>
+<td>被更新的是什么</td>
+<td>VLA 权重、残差小网络、规划器、技能库、世界模型</td>
+</tr>
+</tbody>
+</table>
+<p>三个词各管闭环的一部分：<strong>Agentic</strong> 管"谁来驱动闭环"（选练什么、重置场景、判成败）；<strong>WAM</strong> 管"在想象里跑闭环"；<strong>RSI</strong> 问"闭环能不能一轮比一轮强"。</p>
+<p><strong>一句话</strong>：机器人 RL = 生成 → 打分 → 更新；先问经验、分数、被更新的东西各是什么。</p>
+<h3 id="vla-rl2026-11-20">第二步：VLA 为什么需要 RL（2026-11-20）</h3>
+<p><strong>类比：只看过老司机录像的新手。</strong> 只要车一偏离录像里的路线，他就没见过这种画面，越开越偏。</p>
+<p>RISE 引言说，IL 受示范的质量和覆盖范围限制，还有暴露偏差（exposure bias）：机器人一旦稍微偏离专家的分布，就没有纠正能力，误差会越积越大（<code>rise-2602.11075.txt</code> L84–L89）。原文是这样说的：</p>
+<blockquote>
+<p>"once the robot drifts slightly off the expert's manifold, it lacks the recovery skills"</p>
+</blockquote>
+<p>用数字感受误差累积：假设每一步有 <span class="arithmatex">\(q\)</span> 的概率偏离示范分布，一条轨迹有 <span class="arithmatex">\(T\)</span> 步，那么整条轨迹都没偏离的概率是：</p>
+<div class="arithmatex">\[P(\text{整条都不偏}) = (1-q)^T\]</div>
+<p><strong>例子</strong>（数是编的）：<span class="arithmatex">\(q = 0.02\)</span>、<span class="arithmatex">\(T = 50\)</span>，算出 <span class="arithmatex">\(0.98^{50} \approx 0.364\)</span>。也就是说，约 63.6% 的轨迹至少偏离一次。偏离以后的状态示范里没有，只有靠机器人自己试错，才学得到怎么纠正回来。</p>
+<p>RL 恰好补上这个缺口，但在真机上做 RL 有四个难点：<strong>贵、要人重置场景、要人判成败、有安全风险</strong>（<code>world-vla-loop-2602.06508.txt</code> L49–L50；<code>find-agentic-rl-2609.32069.txt</code> 引言）。后面几步的方法，都是在想办法把这四件事从人手里拿走。</p>
+<p><strong>一句话</strong>：IL 学不会纠错，RL 能学会；真机 RL 难在贵、重置、判成败和安全这四件事。</p>
+<h3 id="2026-11-20_1">第三步：奖励从稀疏走向稠密（2026-11-20）</h3>
+<p><strong>类比：打分。</strong> 考试只给"及格 / 不及格"（稀疏），学生不知道错在哪；老师逐题批改（稠密），学生就知道哪一步扣了分。</p>
+<table>
+<thead>
+<tr>
+<th>做法</th>
+<th>代表</th>
+<th>原文位置</th>
+<th>要点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0/1 结果奖励</td>
+<td>SimpleVLA-RL</td>
+<td><code>simplevla-rl</code> L335</td>
+<td>成功给 1、失败给 0；需要仿真器能判断成败</td>
+</tr>
+<tr>
+<td>步数预测（steps-to-go）</td>
+<td>Self-Improving EFM</td>
+<td><code>self-improving-efm</code> L20–L22</td>
+<td>SFT 时顺带训练"离完成还差几步"，这一个头同时给出稠密奖励和成功检测器</td>
+</tr>
+<tr>
+<td>价值模型 + 优势</td>
+<td>π*0.6 RECAP</td>
+<td><code>pistar06-recap</code> L26、L67</td>
+<td>价值模型算优势，按优势给策略打"这次是改进"的标签</td>
+</tr>
+<tr>
+<td>混合稠密奖励</td>
+<td>IG-RFT</td>
+<td><code>ig-rft</code> L32</td>
+<td>轨迹级奖励加子任务级奖励</td>
+</tr>
+</tbody>
+</table>
+<p><strong>进度奖励的思路</strong>（示意，论文的具体形式到第 8 章再核对）：设 <span class="arithmatex">\(g(o_t)\)</span> 是模型在观察 <span class="arithmatex">\(o_t\)</span> 上预测的"还差几步"，每一步的奖励取"差的步数减少了多少"：</p>
+<div class="arithmatex">\[r_t = g(o_t) - g(o_{t+1})\]</div>
+<p><strong>例子</strong>（数是编的）：<span class="arithmatex">\(g\)</span> 依次是 10、8、8、5，奖励依次是 2、0、3。中间那步原地踏步，得 0 分；最后那步进展最大，得 3 分。<span class="arithmatex">\(g\)</span> 降到 0 附近，就可以当作"成功"。</p>
+<p><strong>优势</strong>（advantage）：这一步比"平常水平"好多少。</p>
+<div class="arithmatex">\[A(s,a) = Q(s,a) - V(s)\]</div>
+<p><span class="arithmatex">\(Q\)</span> 是在状态 <span class="arithmatex">\(s\)</span> 做动作 <span class="arithmatex">\(a\)</span> 之后的预期回报，<span class="arithmatex">\(V\)</span> 是在 <span class="arithmatex">\(s\)</span> 的平均预期回报。例如 <span class="arithmatex">\(Q = 0.8\)</span>、<span class="arithmatex">\(V = 0.5\)</span>，算出 <span class="arithmatex">\(A = +0.3\)</span>，说明这个动作比平常好。</p>
+<p><strong>一句话</strong>：奖励从 0/1 走向进度和优势，机器人才知道哪一步做对了。</p>
+<h3 id="rl-2026-11-20">第四步：优化方式：把 RL 变回加权的监督学习（2026-11-20）</h3>
+<p><strong>类比：改错本加星号。</strong> 不重写教材，只给每道题标上"重点"或"少看"，复习时照着权重来。</p>
+<p>VLA 的动作头大多是 flow matching 或扩散模型，动作的对数概率不好算。所以主流做法是保留监督学习的训练方式，只把优势当成权重或条件：</p>
+<p><strong>AWR（IG-RFT 的 IG-AWR 就是它的变体，<code>ig-rft</code> L29）</strong>：每条样本的权重是</p>
+<div class="arithmatex">\[w = \exp(A / \beta)\]</div>
+<p><span class="arithmatex">\(\beta\)</span>（读作"贝塔"）是温度，越小越偏心好样本。<strong>例子</strong>：<span class="arithmatex">\(A\)</span> 分别是 <span class="arithmatex">\(+1, 0, -1\)</span>，取 <span class="arithmatex">\(\beta = 1\)</span>，算出权重 2.718、1、0.368。好样本的权重是差样本的 7.4 倍。</p>
+<p><strong>优势条件</strong>（RECAP、RISE）：训练时把指示量 <span class="arithmatex">\(I = \mathbb{1}[A &gt; 0]\)</span> 当成一个输入条件（<span class="arithmatex">\(\mathbb{1}[\cdot]\)</span> 读作"指示函数"，括号里成立取 1，否则取 0）；推理时固定 <span class="arithmatex">\(I = 1\)</span>，只生成"比平常好"的动作。</p>
+<p><strong>残差 RL + 蒸馏</strong>（PLD，<code>pld-residual-rl</code> L20–L28）：冻结大 VLA，只训练一个小残差网络 <span class="arithmatex">\(\pi_{\text{res}}\)</span>：</p>
+<div class="arithmatex">\[a = a_{\text{base}} + a_{\text{res}}\]</div>
+<p>做法分三步：
+1. 残差用 off-policy RL 训练，在基础策略会失败的状态里接管（探测失败区）；
+2. 收集的数据偏向基础策略常去的状态；
+3. 最后用 SFT 把这些数据蒸馏回大模型。</p>
+<p>PLD 在 LIBERO 上做到约 99%。FIND 也用"冻结 π0.5 + 残差 off-policy RL"这套组合。</p>
+<p><strong>一句话</strong>：大模型稳着学，小模块去探路，最后把探到的经验蒸馏回大模型。</p>
+<h3 id="wam-rl2026-11-20">第五步：WAM 与 RL：在想象里练（2026-11-20）</h3>
+<p><strong>类比：飞行模拟器。</strong> 在模拟器里摔一万次都不花钱，但模拟器做得不像，练出来的技巧到真飞机上就不灵。</p>
+<p><strong>WAM 一身三用</strong>（Motus2，<code>motus2</code> L25–L27）：同一套权重暴露三个接口。</p>
+<table>
+<thead>
+<tr>
+<th>接口</th>
+<th>作用</th>
+<th>对应 RL 里的角色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>策略（world–action model）</td>
+<td>提出候选动作块</td>
+<td>actor</td>
+</tr>
+<tr>
+<td>模拟器（action-conditioned world model）</td>
+<td>预测这些动作的视觉后果</td>
+<td>环境模型</td>
+</tr>
+<tr>
+<td>评估器（value model）</td>
+<td>给预测结果打分</td>
+<td>critic / 奖励</td>
+</tr>
+</tbody>
+</table>
+<p>三者串起来，本身就是一个基于模型的 RL（model-based RL）回路。</p>
+<p><strong>三篇代表：</strong>
+- <strong>RISE</strong>（<code>rise</code> L64–L79）：组合式世界模型 = 可控动力学模型（预测多视角未来）+ 进度价值模型（打分）。在想象里算优势，再做优势条件训练。三个真机任务的成功率分别提升约 35%、45%、35%（绝对值）。
+- <strong>World-VLA-Loop</strong>（<code>world-vla-loop</code> L48–L70）：世界模型训练时专门混入"差一点就成功"的轨迹（SANS 数据集），并在扩散隐变量上联合预测画面和 0/1 奖励。策略和世界模型交替更新，原文叫 co-evolving（共同进化）。
+- <strong>MERL</strong>（<code>merl</code> L19–L27）：按模拟器的可信度，控制想象数据占多大比例、往前想象多远。</p>
+<p><strong>核心风险：策略钻想象的空子。</strong> 想象出来的画面"看起来像成功"，但不一定忠实反映输入的动作。策略会学会专挑世界模型预测错的地方得高分。几种对策：</p>
+<table>
+<thead>
+<tr>
+<th>对策</th>
+<th>代表</th>
+<th>做法</th>
+<th>原文</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>自我验证</td>
+<td>WAV</td>
+<td>把预测拆成"状态合理吗""动作能到达吗"两件事分别验证。理由是两种不对称：没有动作标签的视频多得多；跟动作相关的特征维度低得多</td>
+<td><code>world-action-verifier</code> L19–L38</td>
+</tr>
+<tr>
+<td>用 IDM 核对</td>
+<td>EVO-WAM</td>
+<td>VLM 挑出完成任务的前缀，IDM 核对视频和动作是否一致，再用这些自生成数据自训。Cosmos3 在 7 个没见过的 RoboTwin 任务上从 26.9% 提到 68.0%</td>
+<td><code>evo-wam</code> L27–L36</td>
+</tr>
+<tr>
+<td>先修后拒</td>
+<td>R²-WAM</td>
+<td>先让想象服从动作，再对想象中进度不如示范的样本做负向微调。RoboTwin 2.0 上平均 93.8%</td>
+<td><code>r2-wam</code> L24–L33</td>
+</tr>
+<tr>
+<td>可信度门控</td>
+<td>MERL</td>
+<td>模拟器越不可信，想象数据用得越少、想象的时域越短</td>
+<td><code>merl</code> L23–L26</td>
+</tr>
+</tbody>
+</table>
+<p><strong>一句话</strong>：WAM 让 RL 搬进想象里做，代价是要防策略钻想象的空子。</p>
+<h3 id="agentic-rl-2026-11-20">第六步：Agentic 与 RL 的两种结合（2026-11-20）</h3>
+<p><strong>类比：教练和学员。</strong> 第一种是请个教练安排训练（agent 管闭环）；第二种是把教练本人也送去培训（RL 训练规划器）。</p>
+<p><strong>A. Agent 当 RL 的"操作员"：把人从闭环里拿掉</strong></p>
+<ul>
+<li><strong>FIND</strong>（<code>find-agentic-rl</code> L6–L34）：VLM agent 看当前场景，决定下一步练什么，优先练近期成功率低的任务；用执行前后的成对观察判断成败。人工评估的成功率从 55% 提到 71.9%。一次 6 小时跑了 456 个 episode，只需要 30 次人工救场，没有人工奖励标签。</li>
+<li><strong>RoboClaw</strong>（<code>roboclaw</code> L24–L46）：用纠缠动作对 EAP 把"正向操作"和"逆向复原"配成一对，场景能自己重置；采数据和部署共用同一个 VLM agent。长程任务成功率提升 25%，人力时间减少 53.7%。</li>
+<li><strong>Agentic-VLA</strong>（<code>agentic-vla-online</code> 摘要）：根据当前能力动态生成奖励函数，把任务拆成子目标，形成课程学习。</li>
+</ul>
+<p><strong>"挑弱项练"的打分</strong>（示意，规则是编的；FIND 的具体规则到第 9 章核对）：让任务 <span class="arithmatex">\(i\)</span> 被选中的概率正比于 <span class="arithmatex">\(1 - s_i\)</span>，<span class="arithmatex">\(s_i\)</span> 是近期成功率。</p>
+<table>
+<thead>
+<tr>
+<th>任务</th>
+<th>近期成功率 <span class="arithmatex">\(s_i\)</span></th>
+<th><span class="arithmatex">\(1-s_i\)</span></th>
+<th>被选概率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>擦桌子</td>
+<td>0.9</td>
+<td>0.1</td>
+<td>0.1 / 1.4 ≈ 0.07</td>
+</tr>
+<tr>
+<td>叠毛巾</td>
+<td>0.5</td>
+<td>0.5</td>
+<td>0.5 / 1.4 ≈ 0.36</td>
+</tr>
+<tr>
+<td>插插头</td>
+<td>0.2</td>
+<td>0.8</td>
+<td>0.8 / 1.4 ≈ 0.57</td>
+</tr>
+</tbody>
+</table>
+<p><strong>B. 用 RL 训练规划器本身</strong></p>
+<p><strong>AgenticRoboRL</strong>（<code>agenticroborl</code> L45、L114–L124）把 coding agent 的训练配方搬到机器人规划器上：
+- 先在成功轨迹上做 SFT，再做多轮 RL；
+- 执行层（VLA 技能或控制代码）固定不动，只训练规划器；
+- 只在任务结束时给奖励，不用学出来的 critic（L301），优势按组内相对比较计算。</p>
+<p>结果：在 LIBERO-PRO 上，9B 规划器 SFT 后从 18.1% 提到 65.1%，RL 后到 71.0%，接近 Codex（GPT-5.5）加外部记忆的 72.1%。</p>
+<p><strong>组内相对优势</strong>：同一个任务试 <span class="arithmatex">\(G\)</span> 次，第 <span class="arithmatex">\(i\)</span> 次的优势取</p>
+<div class="arithmatex">\[A_i = r_i - \bar r\]</div>
+<p><span class="arithmatex">\(\bar r\)</span>（读作"r 拔"）是这一组的平均奖励。<strong>例子</strong>（数是编的）：6 次尝试的奖励是 1、0、0、1、0、0，<span class="arithmatex">\(\bar r = 1/3\)</span>。成功的两次优势是 <span class="arithmatex">\(+2/3\)</span>，失败的四次是 <span class="arithmatex">\(-1/3\)</span>。如果 6 次全成功或全失败，优势全是 0，这组就学不到东西。</p>
+<p><strong>一句话</strong>：agent 可以替人管闭环，规划器本身也可以用 RL 训练。</p>
+<h3 id="rsi2026-11-20">第七步：RSI：把上面这些放进四个层级（2026-11-20）</h3>
+<p><strong>类比：学生的四种进步。</strong>
+1. 这道题做错了，马上改对（当场纠正）；
+2. 把错题记进本子，下次不再错（持久改进）；
+3. 拿今年的笔记当明年的起点，一年比一年好（版本继承）；
+4. 连"怎么记笔记、怎么复习"的方法本身都在进化（元层改进）。</p>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>含义</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L1 episode 内纠正</td>
+<td>一次任务里看反馈重试</td>
+<td>SC-VLA、Inner Monologue</td>
+</tr>
+<tr>
+<td>L2 持久改进</td>
+<td>经验写进权重或技能库，下次还在</td>
+<td>RECAP、PLD、RoboClaw</td>
+</tr>
+<tr>
+<td>L3 版本继承</td>
+<td>改进后的模型当下一轮的起点，多轮迭代</td>
+<td>Self-Improving EFM、EVO-WAM</td>
+</tr>
+<tr>
+<td>L4 改进流程本身变好</td>
+<td>元层改进</td>
+<td>具身方向几乎还没有；软件 agent 有 Darwin Gödel Machine</td>
+</tr>
+</tbody>
+</table>
+<p>（四个层级来自 2026-10 的具身 RSI 综述，preprints.org 202610.2080，全文待读核对。）</p>
+<p>两条原理：</p>
+<ol>
+<li><strong>验证比生成容易</strong>，这是闭环不会越练越差的前提。例子：STaR 只保留答案正确的推理（<code>star</code> L174），WAV 用两种不对称，EVO-WAM 用 IDM 核对。动画里能看到：只要筛选器比瞎猜好，闭环就往上走；筛选器比瞎猜还差，闭环就往下掉。</li>
+<li><strong>执行上自主 ≠ 改进上自主</strong>（综述的提醒）。机器人能自己干活、自己采数据，不等于改进流程在变好；有技能库，也不等于在做递归自改进。</li>
+</ol>
+<p><strong>一句话</strong>：RL 是 L2、L3 的发动机；具身方向还没做出 L4。</p>
+<h3 id="_2">动画演示：自改进闭环：筛选器有多准，决定闭环往哪走</h3>
+<p><img alt="自改进闭环" src="../animations/01-self-improvement-loop.gif" /></p>
+<p>可交互版：<a href="../animations/01-self-improvement-loop.html">animations/01-self-improvement-loop.html</a>。滑块"误收率"是筛选器把失败当成成功收下的概率。</p>
+<p><strong>怎么看</strong>：
+1. 每轮分三拍：生成 24 次尝试（绿 = 真成功，红 = 真失败）→ 筛选器打圈收下 → 用收下的样本更新成功率（第一步）。
+2. 右边两条曲线：紫线是"有筛选"，灰线是"不筛选、全收"。灰线基本不动，说明只是自己学自己，学不到新东西（第一步、第七步）。
+3. 把误收率拖到 0.5：紫线还在涨，只是变慢。拖到 0.95：收下的样本里失败比成功还多，紫线往下掉。这就是奖励黑客和想象被钻空子的玩具版（第五步、第七步）。</p>
+<h2 id="_3">练习与作答记录</h2>
+<p><strong>题 1</strong>（第四步 优化方式）：为什么 RECAP、RISE、IG-RFT 都没有直接用 PPO 训练 flow-matching 动作头，而是用"优势条件"或"优势加权"？</p>
+<blockquote>
+<p>作答：（待作答）</p>
+</blockquote>
+<p><strong>题 2</strong>（第五步 在想象里练）：World-VLA-Loop 为什么要用新策略的 rollout 回头微调世界模型？如果不这么做，会出现什么现象？</p>
+<blockquote>
+<p>作答：（待作答）</p>
+</blockquote>
+<p><strong>题 3</strong>（第六、七步 Agentic 与四个层级）：FIND 让机器人自己判断成败、自己选任务。按四个层级它算第几层？离 L4 还缺什么？</p>
+<blockquote>
+<p>作答：（待作答）</p>
+</blockquote>
+<h2 id="_4">口诀</h2>
+<blockquote>
+<p>生成打分再更新，经验分数改了谁；<br />
+模仿不会自纠错，稀疏奖励变稠密；<br />
+大模型稳小模块探，想象要验 agent 管；<br />
+验证容易闭环升，改进流程是第四层。</p>
+</blockquote>
+<h2 id="_5">本章复习卡片</h2>
+<p>AR01–AR10。练习做完后，按答错、卡住的地方补上。</p>
+<h2 id="_6">附录 · 延伸阅读</h2>
+<blockquote>
+<p>留给以后深入学习用，不影响本章主线。★ 是建议先读的。</p>
+</blockquote>
+<h3 id="_7">推荐阅读</h3>
+<table>
+<thead>
+<tr>
+<th>读什么</th>
+<th>读哪里</th>
+<th>读它为了什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>★ Self-Improving Embodied Foundation Models</td>
+<td>摘要 L17–L36；方法节到第 8 章再核对</td>
+<td>steps-to-go 怎么同时当奖励和成功检测器</td>
+</tr>
+<tr>
+<td>★ π*0.6 RECAP（<code>vla-deep-dive</code>）</td>
+<td>L26、L67</td>
+<td>优势条件策略的原始做法</td>
+</tr>
+<tr>
+<td>★ PLD</td>
+<td>摘要 L15–L36</td>
+<td>残差 RL 探测失败区，再蒸馏回大模型</td>
+</tr>
+<tr>
+<td>★ RISE</td>
+<td>摘要 L64–L79；引言 L84–L89</td>
+<td>在想象里做 on-policy RL 的完整管线</td>
+</tr>
+<tr>
+<td>★ World Action Verifier</td>
+<td>摘要 L19–L38</td>
+<td>为什么"验证比预测容易"</td>
+</tr>
+<tr>
+<td>EVO-WAM</td>
+<td>摘要 L22–L37</td>
+<td>WAM 用自己生成的数据自训</td>
+</tr>
+<tr>
+<td>R²-WAM、MERL</td>
+<td>摘要</td>
+<td>先修后拒；可信度门控</td>
+</tr>
+<tr>
+<td>★ FIND</td>
+<td>摘要 L6–L34</td>
+<td>agent 管选任务、判成败</td>
+</tr>
+<tr>
+<td>★ AgenticRoboRL</td>
+<td>L45、L114–L124、L301</td>
+<td>用 SFT + 多轮 RL 训练规划器</td>
+</tr>
+<tr>
+<td>SimpleVLA-RL（<code>vla-deep-dive</code>）</td>
+<td>GRPO 公式 L277–L285；结果奖励 L335</td>
+<td>VLA 上 on-policy RL 的基线</td>
+</tr>
+<tr>
+<td>STaR</td>
+<td>L156–L176</td>
+<td>最早的"只留对的再训练"闭环</td>
+</tr>
+<tr>
+<td>具身 RSI 综述</td>
+<td>preprints.org 202610.2080（未归档全文）</td>
+<td>四个层级和证据标准</td>
+</tr>
+<tr>
+<td>cs285-deep-rl 讲义</td>
+<td>策略梯度、优势函数、PPO 各章</td>
+<td>RL 算法本身</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_8">数学原理</h3>
+<ul>
+<li><strong>误差累积</strong>：每步独立以 <span class="arithmatex">\(q\)</span> 的概率偏离，<span class="arithmatex">\(T\)</span> 步都不偏的概率是 <span class="arithmatex">\((1-q)^T\)</span>，随 <span class="arithmatex">\(T\)</span> 指数下降。</li>
+<li><strong>优势</strong>：<span class="arithmatex">\(A = Q - V\)</span>，以平均水平为基线，只看"比平常好多少"，能降低方差。</li>
+<li><strong>AWR</strong>：在"新策略不能离旧策略太远"的约束下，最优策略正比于 <span class="arithmatex">\(\pi_{\text{old}}(a|s)\exp(A/\beta)\)</span>。把它投影回参数化策略，就是按 <span class="arithmatex">\(\exp(A/\beta)\)</span> 加权的回归。</li>
+<li><strong>组内相对基线</strong>：用同一组尝试的平均奖励当基线，省掉 critic。</li>
+</ul>
+<h3 id="_9">公式清单</h3>
+<table>
+<thead>
+<tr>
+<th>公式</th>
+<th>意思</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(\theta_{k+1} = \mathrm{Update}(\theta_k, \mathrm{Filter}(\mathrm{Generate}(\theta_k)))\)</span></td>
+<td>自改进闭环</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\((1-q)^T\)</span></td>
+<td><span class="arithmatex">\(T\)</span> 步都不偏离示范分布的概率</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(r_t = g(o_t) - g(o_{t+1})\)</span></td>
+<td>进度奖励（示意）</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(A(s,a) = Q(s,a) - V(s)\)</span></td>
+<td>优势</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(w = \exp(A/\beta)\)</span></td>
+<td>AWR 样本权重</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(I = \mathbb{1}[A &gt; 0]\)</span></td>
+<td>优势条件的指示量</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(a = a_{\text{base}} + a_{\text{res}}\)</span></td>
+<td>残差策略</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(A_i = r_i - \bar r\)</span></td>
+<td>组内相对优势</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_10">代码对照：把本章的数字用代码算一遍</h3>
+<blockquote>
+<p>纯 Python（Python 标准库，不需要 numpy、GPU）。代码在仓库本地 <code>agentic-vla-wam-rsi/solutions/chapter-code/ch01_self_improvement_loop.py</code>，配套测试 <code>tests/test_ch01.py</code>：</p>
+<p><code>bash  
+cd agentic-vla-wam-rsi/solutions/chapter-code  
+uv run python ch01_self_improvement_loop.py   # 一步一步打印  
+uv run pytest tests/test_ch01.py</code></p>
+</blockquote>
+<p><strong>讲义 ↔ 代码</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>讲义</th>
+<th>公式</th>
+<th>写法</th>
+<th>跑出来</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第二步 误差累积</td>
+<td><span class="arithmatex">\((1-q)^T\)</span></td>
+<td><code>no_drift_prob(0.02, 50)</code></td>
+<td>0.364</td>
+</tr>
+<tr>
+<td>第三步 进度奖励</td>
+<td><span class="arithmatex">\(g(o_t)-g(o_{t+1})\)</span></td>
+<td><code>progress_rewards([10, 8, 8, 5])</code></td>
+<td>[2, 0, 3]</td>
+</tr>
+<tr>
+<td>第四步 AWR</td>
+<td><span class="arithmatex">\(\exp(A/\beta)\)</span></td>
+<td><code>awr_weights([1, 0, -1], 1.0)</code></td>
+<td>[2.718, 1.0, 0.368]</td>
+</tr>
+<tr>
+<td>第六步 挑弱项</td>
+<td><span class="arithmatex">\(\propto 1-s_i\)</span></td>
+<td><code>practice_probs([0.9, 0.5, 0.2])</code></td>
+<td>[0.071, 0.357, 0.571]</td>
+</tr>
+<tr>
+<td>第六步 组内优势</td>
+<td><span class="arithmatex">\(r_i - \bar r\)</span></td>
+<td><code>group_advantages([1, 0, 0, 1, 0, 0])</code></td>
+<td>[0.667, -0.333, …]</td>
+</tr>
+<tr>
+<td>动画</td>
+<td>期望更新</td>
+<td><code>expected_loop(0.2, fp, rounds=10)</code></td>
+<td>误收率 0 / 0.5 / 0.95 三条曲线</td>
+</tr>
+</tbody>
+</table>
+<p><strong>关键几行</strong>：</p>
+<pre><code class="language-python">def expected_loop(p0, fp, fn=0.1, eta=0.5, rounds=10):
+    p, curve = p0, [p0]
+    for _ in range(rounds):
+        keep_good = p * (1 - fn)            # 真成功被收下的比例
+        keep_bad = (1 - p) * fp             # 真失败被误收的比例
+        precision = keep_good / (keep_good + keep_bad)  # 收下的里面真成功占多少
+        p = (1 - eta) * p + eta * precision  # 朝&quot;收下样本的成功率&quot;学一半
+        curve.append(p)
+    return curve
+</code></pre>
+<p><strong>代码里才看得到的 2 件事</strong>：
+1. 动画里每一拍是真随机抽样，曲线会抖；代码里用的是期望值，曲线是平滑的。两者趋势一致。
+2. 闭环上升的条件是 <code>precision &gt; p</code>。化简后等价于 <code>fp &lt; 1 - fn</code>，也就是误收率低于"真成功被收下的概率"。这就是"筛选器比瞎猜好"的精确含义。</p>
+<p><strong>自己改一改</strong>（不影响练习答案）：
+- 把 <code>fn</code>（漏收率）调到 0.5，看要多低的 <code>fp</code> 闭环才会涨。
+- 把 <code>eta</code> 调到 0.1 和 0.9，看收敛快慢的区别。
+- 把 <code>p0</code> 调到 0.01，看起点很差时闭环要多少轮才起得来（冷启动问题，第 2 章细讲）。</p><nav class="pager"><span></span><span></span></nav>
+</main>
+<footer>来自个人学习仓库的对话讲义，含练习作答记录。源码：<a href="https://github.com/wikieden/self-improving-robots">github.com/wikieden/self-improving-robots</a>。更多讲义书：<a href="https://wikieden.github.io/ai-books/">Physical AI 0-1-♾️（合集）</a></footer>
+</body></html>

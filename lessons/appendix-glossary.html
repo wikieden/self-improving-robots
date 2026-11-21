@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>附录 · 缩写与术语表 · RSI 与 WAM/VLA</title>
+<style>
+:root{--bg:#fbfbfa;--fg:#1f2328;--mute:#5d6470;--line:#e3e5e8;--card:#fff;--acc:#2f6fdf;--code:#f2f3f5;--quote:#f4f6fa}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15181d;--fg:#e4e7ec;--mute:#9aa3b2;--line:#2c323b;--card:#1c2026;--acc:#7aa7ff;--code:#22272f;--quote:#1b2029}}
+:root[data-theme="dark"]{--bg:#15181d;--fg:#e4e7ec;--mute:#9aa3b2;--line:#2c323b;--card:#1c2026;--acc:#7aa7ff;--code:#22272f;--quote:#1b2029}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.75 -apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Helvetica Neue",sans-serif}
+a{color:var(--acc)}
+header.top{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+header.top .in{max-width:860px;margin:0 auto;padding:10px 16px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;font-size:14px}
+header.top .brand{font-weight:600;color:var(--fg);text-decoration:none;margin-right:auto}
+header.top a{text-decoration:none}
+main{max-width:860px;margin:0 auto;padding:24px 16px 72px;overflow-wrap:anywhere}
+h1{font-size:28px;line-height:1.35;margin:8px 0 16px} h2{font-size:22px;margin:40px 0 12px;padding-top:8px;border-top:1px solid var(--line)} h3{font-size:18px;margin:28px 0 8px}
+img{max-width:100%;height:auto;border-radius:8px;border:1px solid var(--line);background:#fff}
+blockquote{margin:16px 0;padding:10px 16px;background:var(--quote);border-left:3px solid var(--acc);border-radius:4px;color:var(--mute)}
+blockquote p{margin:4px 0}
+code{background:var(--code);padding:1px 5px;border-radius:4px;font-size:.9em}
+pre{background:var(--code);padding:12px 14px;border-radius:8px;overflow-x:auto} pre code{padding:0;background:none}
+table{border-collapse:collapse;display:block;overflow-x:auto;max-width:100%;margin:12px 0;font-size:15px}
+th,td{border:1px solid var(--line);padding:6px 10px;vertical-align:top} th{background:var(--code)}
+details{border:1px solid var(--line);border-radius:8px;padding:6px 12px;margin:8px 0;background:var(--card)}
+details[open]{padding-bottom:10px} summary{cursor:pointer;color:var(--acc);font-weight:500}
+mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+.btn{display:inline-block;margin:4px 8px 4px 0;padding:6px 14px;border:1px solid var(--acc);border-radius:999px;text-decoration:none;font-size:14px}
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:15px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin:16px 0}
+.card{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;color:inherit;text-decoration:none}
+.card:hover{border-color:var(--acc)} .card img{border:0;border-bottom:1px solid var(--line);border-radius:0;aspect-ratio:16/10;object-fit:contain;width:100%}
+.card .no{color:var(--mute);font-size:13px;padding:8px 12px 0} .card .t{padding:0 12px 12px;font-weight:500;line-height:1.5}
+.lead{font-size:17px;color:var(--mute)}
+footer{max-width:860px;margin:0 auto;padding:0 16px 40px;color:var(--mute);font-size:13px}
+</style>
+<script>window.MathJax={tex:{inlineMath:[["\\(","\\)"]],displayMath:[["\\[","\\]"],["$$","$$"]],processEscapes:true,processEnvironments:true}};</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+</head><body>
+<header class="top"><div class="in">
+<a class="brand" href="../index.html">RSI 与 WAM/VLA</a>
+<a href="../lessons/index.html">讲义目录</a>
+<a href="../animations/index.html">动画</a>
+<a href="../review.html">复习卡片</a>
+<a href="../lessons/appendix-glossary.html">缩写表</a>
+<a href="https://wikieden.github.io/ai-books/">← 全部讲义书</a>
+</div></header>
+<main>
+<h1 id="_1">附录 · 缩写与术语表</h1>
+<blockquote>
+<p>用途：讲义里遇到缩写，先查这一页。每章开头的"本章缩写"只列这一章用到的。整理日期：2026-11-20。<br />
+写法：缩写 = 英文全称（逐词拆开的中文意思）；"第一次出现"指本书讲义里第一次出现的那一章。</p>
+</blockquote>
+<h2 id="_2">模型</h2>
+<table>
+<thead>
+<tr>
+<th>缩写</th>
+<th>全称</th>
+<th>意思</th>
+<th>第一次出现</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VLA</td>
+<td>Vision-Language-Action</td>
+<td>视觉 / 语言 / 动作：看图、听指令、直接出动作的机器人模型</td>
+<td><a href="../lessons/01-self-improvement-loop.html">第 1 章</a></td>
+</tr>
+<tr>
+<td>WAM</td>
+<td>World Action Model</td>
+<td>世界 / 动作 / 模型：联合预测未来画面和动作</td>
+<td><a href="../lessons/01-self-improvement-loop.html">第 1 章</a></td>
+</tr>
+<tr>
+<td>VLM</td>
+<td>Vision-Language Model</td>
+<td>视觉 / 语言 / 模型：看图说话的大模型，常当规划器或判官</td>
+<td><a href="../lessons/01-self-improvement-loop.html">第 1 章</a></td>
+</tr>
+<tr>
+<td>EFM</td>
+<td>Embodied Foundation Model</td>
+<td>具身 / 基础 / 模型</td>
+<td><a href="../lessons/01-self-improvement-loop.html">第 1 章</a></td>
+</tr>
+<tr>
+<td>IDM</td>
+<td>Inverse Dynamics Model</td>
+<td>逆 / 动力学 / 模型：看前后两帧，反推中间做了什么动作</td>
+<td><a href="../lessons/01-self-improvement-loop.html">第 1 章</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="_3">学习方法</h2>
+<table>
+<thead>
+<tr>
+<th>缩写</th>
+<th>全称</th>
+<th>意思</th>
+<th>第一次出现</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RL</td>
+<td>Reinforcement Learning</td>
+<td>强化 / 学习：靠奖励试错改进</td>
+<td><a href="../lessons/01-self-improvement-loop.html">第 1 章</a></td>
+</tr>
+<tr>
+<td>RSI</td>
+<td>Recursive Self-Improvement</td>
+<td>递归 / 自我 / 改进：改进后的系统再去改进自己</td>
+<td><a href="../lessons/01-self-improvement-loop.html">第 1 章</a></td>
+</tr>
+<tr>
+<td>IL</td>
+<td>Imitation Learning</td>
+<td>模仿 / 学习</td>
+<td><a href="../lessons/01-self-improvement-loop.html">第 1 章</a></td>
+</tr>
+<tr>
+<td>BC</td>
+<td>Behavior Cloning</td>
+<td>行为 / 克隆：直接回归示范动作，IL 最简单的做法</td>
+<td><a href="../lessons/01-self-improvement-loop.html">第 1 章</a></td>
+</tr>
+<tr>
+<td>SFT</td>
+<td>Supervised Fine-Tuning</td>
+<td>有监督 / 微调</td>
+<td><a href="../lessons/01-self-improvement-loop.html">第 1 章</a></td>
+</tr>
+<tr>
+<td>PPO</td>
+<td>Proximal Policy Optimization</td>
+<td>近端 / 策略 / 优化：限制每次更新幅度的策略梯度算法</td>
+<td><a href="../lessons/01-self-improvement-loop.html">第 1 章</a></td>
+</tr>
+<tr>
+<td>GRPO</td>
+<td>Group Relative Policy Optimization</td>
+<td>组内 / 相对 / 策略优化：用同组尝试的平均奖励当基线，不要 critic</td>
+<td><a href="../lessons/01-self-improvement-loop.html">第 1 章</a></td>
+</tr>
+<tr>
+<td>AWR</td>
+<td>Advantage-Weighted Regression</td>
+<td>优势 / 加权 / 回归：按 <span class="arithmatex">\(\exp(A/\beta)\)</span> 给样本加权再回归</td>
+<td><a href="../lessons/01-self-improvement-loop.html">第 1 章</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="_4">论文里的方法名</h2>
+<table>
+<thead>
+<tr>
+<th>缩写</th>
+<th>全称</th>
+<th>意思</th>
+<th>第一次出现</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RECAP</td>
+<td>RL with Experience and Corrections via Advantage-conditioned Policies</td>
+<td>经验与纠正 / 优势条件策略的 RL（π*0.6）</td>
+<td><a href="../lessons/01-self-improvement-loop.html">第 1 章</a></td>
+</tr>
+<tr>
+<td>PLD</td>
+<td>Probe, Learn, Distill</td>
+<td>探测 / 学习 / 蒸馏：残差 RL 探失败区再蒸馏回 VLA</td>
+<td><a href="../lessons/01-self-improvement-loop.html">第 1 章</a></td>
+</tr>
+<tr>
+<td>EAP</td>
+<td>Entangled Action Pairs</td>
+<td>纠缠 / 动作 / 对：正向操作 + 逆向复原配对，场景自己重置（RoboClaw）</td>
+<td><a href="../lessons/01-self-improvement-loop.html">第 1 章</a></td>
+</tr>
+<tr>
+<td>WAV</td>
+<td>World Action Verifier</td>
+<td>世界 / 动作 / 验证器：让世界模型发现自己的预测错误</td>
+<td><a href="../lessons/01-self-improvement-loop.html">第 1 章</a></td>
+</tr>
+<tr>
+<td>MERL</td>
+<td>Model-Evolving Reinforcement Learning</td>
+<td>模型 / 进化 / 强化学习：模拟器随策略一起更新，按可信度用想象数据</td>
+<td><a href="../lessons/01-self-improvement-loop.html">第 1 章</a></td>
+</tr>
+<tr>
+<td>IG-RFT</td>
+<td>Interaction-Guided Reinforced Fine-Tuning</td>
+<td>交互 / 引导 / 强化微调</td>
+<td><a href="../lessons/01-self-improvement-loop.html">第 1 章</a></td>
+</tr>
+<tr>
+<td>SC-VLA</td>
+<td>Self-Correcting VLA</td>
+<td>自我纠正 VLA</td>
+<td><a href="../lessons/01-self-improvement-loop.html">第 1 章</a></td>
+</tr>
+<tr>
+<td>STaR</td>
+<td>Self-Taught Reasoner</td>
+<td>自学 / 推理者：只留答对的推理再训练</td>
+<td><a href="../lessons/01-self-improvement-loop.html">第 1 章</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="_5">术语</h2>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>意思</th>
+<th>第一次出现</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>exposure bias（暴露偏差）</td>
+<td>训练时只见过专家状态，部署时一偏离就不会纠正</td>
+<td><a href="../lessons/01-self-improvement-loop.html">第 1 章</a></td>
+</tr>
+<tr>
+<td>advantage（优势）</td>
+<td><span class="arithmatex">\(A = Q - V\)</span>：这个动作比平常好多少</td>
+<td><a href="../lessons/01-self-improvement-loop.html">第 1 章</a></td>
+</tr>
+<tr>
+<td>steps-to-go（剩余步数）</td>
+<td>预测离完成还差几步，可当进度奖励和成功检测器</td>
+<td><a href="../lessons/01-self-improvement-loop.html">第 1 章</a></td>
+</tr>
+<tr>
+<td>residual policy（残差策略）</td>
+<td><span class="arithmatex">\(a = a_{\text{base}} + a_{\text{res}}\)</span>：在冻结的大策略上加一个小修正</td>
+<td><a href="../lessons/01-self-improvement-loop.html">第 1 章</a></td>
+</tr>
+<tr>
+<td>co-evolving（共同进化）</td>
+<td>策略和世界模型交替更新（World-VLA-Loop）</td>
+<td><a href="../lessons/01-self-improvement-loop.html">第 1 章</a></td>
+</tr>
+</tbody>
+</table>
+</main>
+<footer>来自个人学习仓库的对话讲义，含练习作答记录。源码：<a href="https://github.com/wikieden/self-improving-robots">github.com/wikieden/self-improving-robots</a>。更多讲义书：<a href="https://wikieden.github.io/ai-books/">Physical AI 0-1-♾️（合集）</a></footer>
+</body></html>

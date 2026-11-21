@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RSI 与 WAM/VLA · 讲义目录 · RSI 与 WAM/VLA</title>
+<style>
+:root{--bg:#fbfbfa;--fg:#1f2328;--mute:#5d6470;--line:#e3e5e8;--card:#fff;--acc:#2f6fdf;--code:#f2f3f5;--quote:#f4f6fa}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15181d;--fg:#e4e7ec;--mute:#9aa3b2;--line:#2c323b;--card:#1c2026;--acc:#7aa7ff;--code:#22272f;--quote:#1b2029}}
+:root[data-theme="dark"]{--bg:#15181d;--fg:#e4e7ec;--mute:#9aa3b2;--line:#2c323b;--card:#1c2026;--acc:#7aa7ff;--code:#22272f;--quote:#1b2029}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.75 -apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Helvetica Neue",sans-serif}
+a{color:var(--acc)}
+header.top{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+header.top .in{max-width:860px;margin:0 auto;padding:10px 16px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;font-size:14px}
+header.top .brand{font-weight:600;color:var(--fg);text-decoration:none;margin-right:auto}
+header.top a{text-decoration:none}
+main{max-width:860px;margin:0 auto;padding:24px 16px 72px;overflow-wrap:anywhere}
+h1{font-size:28px;line-height:1.35;margin:8px 0 16px} h2{font-size:22px;margin:40px 0 12px;padding-top:8px;border-top:1px solid var(--line)} h3{font-size:18px;margin:28px 0 8px}
+img{max-width:100%;height:auto;border-radius:8px;border:1px solid var(--line);background:#fff}
+blockquote{margin:16px 0;padding:10px 16px;background:var(--quote);border-left:3px solid var(--acc);border-radius:4px;color:var(--mute)}
+blockquote p{margin:4px 0}
+code{background:var(--code);padding:1px 5px;border-radius:4px;font-size:.9em}
+pre{background:var(--code);padding:12px 14px;border-radius:8px;overflow-x:auto} pre code{padding:0;background:none}
+table{border-collapse:collapse;display:block;overflow-x:auto;max-width:100%;margin:12px 0;font-size:15px}
+th,td{border:1px solid var(--line);padding:6px 10px;vertical-align:top} th{background:var(--code)}
+details{border:1px solid var(--line);border-radius:8px;padding:6px 12px;margin:8px 0;background:var(--card)}
+details[open]{padding-bottom:10px} summary{cursor:pointer;color:var(--acc);font-weight:500}
+mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+.btn{display:inline-block;margin:4px 8px 4px 0;padding:6px 14px;border:1px solid var(--acc);border-radius:999px;text-decoration:none;font-size:14px}
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:15px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin:16px 0}
+.card{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;color:inherit;text-decoration:none}
+.card:hover{border-color:var(--acc)} .card img{border:0;border-bottom:1px solid var(--line);border-radius:0;aspect-ratio:16/10;object-fit:contain;width:100%}
+.card .no{color:var(--mute);font-size:13px;padding:8px 12px 0} .card .t{padding:0 12px 12px;font-weight:500;line-height:1.5}
+.lead{font-size:17px;color:var(--mute)}
+footer{max-width:860px;margin:0 auto;padding:0 16px 40px;color:var(--mute);font-size:13px}
+</style>
+<script>window.MathJax={tex:{inlineMath:[["\\(","\\)"]],displayMath:[["\\[","\\]"],["$$","$$"]],processEscapes:true,processEnvironments:true}};</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+</head><body>
+<header class="top"><div class="in">
+<a class="brand" href="../index.html">RSI 与 WAM/VLA</a>
+<a href="../lessons/index.html">讲义目录</a>
+<a href="../animations/index.html">动画</a>
+<a href="../review.html">复习卡片</a>
+<a href="../lessons/appendix-glossary.html">缩写表</a>
+<a href="https://wikieden.github.io/ai-books/">← 全部讲义书</a>
+</div></header>
+<main>
+<h1 id="rsi-wamvla">RSI 与 WAM/VLA · 讲义目录</h1>
+<blockquote>
+<p>副标题：从工具到自我进化。英文名 RSI with WAM / VLA: From Tools to Self-Improvement。<br />
+14 章大纲 · 已写 1 章 · 1 个动画（GIF + 可交互页面）· 10 张复习卡片 · 讲到哪章写哪章，每章照 讲义书范本 补动画、代码对照和复习卡片（AR01 起）</p>
+</blockquote>
+<h2 id="_1">这本书讲什么</h2>
+<p>机器人模型已经能"看一眼、听一句、出动作"（VLA = Vision-Language-Action，视觉 / 语言 / 动作），也能在动手前"想象"接下来会发生什么（WAM = World Action Model，世界 / 动作 / 模型）。这本书问下一个问题：<strong>机器人能不能自己变强？</strong></p>
+<p>先讲清楚什么叫递归自改进（RSI = Recursive Self-Improvement，递归 / 自我 / 改进）和最小的"生成 → 筛选 → 训练"闭环；再看 Agentic VLA 怎么拆任务、调技能、训练规划器，WAM 和 Agentic WAM 怎么把计划、想象和动作放进一个模型；然后把闭环里每一环拆开：奖励从哪来、谁来重置场景、练什么、技能库怎么自己长大、怎么在想象里练、世界模型怎么自己改进；最后讲风险和"怎样才算证明了递归增益"。</p>
+<ul>
+<li><strong>适合谁</strong>：读过本仓库 VLA 讲义前几章，知道策略、动作块、flow matching 是什么；RL 只要知道"奖励、优势"这两个词，细节链接到 强化学习讲义。</li>
+<li><strong>读完能做什么</strong>：拿到一篇"self-improving / self-evolving robot"论文，能判断它在四个层级的哪一层、被改进的是什么、证据够不够；做 学习计划 的里程碑 AR-M0–AR-M7。</li>
+</ul>
+<h2 id="_2">示例动画</h2>
+<table>
+<thead>
+<tr>
+<th>动画</th>
+<th>章</th>
+<th>演什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="自改进闭环" src="../animations/01-self-improvement-loop.gif" /></td>
+<td><a href="../lessons/01-self-improvement-loop.html">第 1 章 全景</a> · <a href="../animations/01-self-improvement-loop.html">▶ 交互</a></td>
+<td>生成 → 筛选 → 更新：筛选器比瞎猜好就往上走，比瞎猜差就往下掉</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_3">其他入口</h2>
+<ul>
+<li>学习计划：阶段 A–H、逐章论文、里程碑</li>
+<li><a href="../review.html">复习卡片</a>（AR01 起）</li>
+<li><a href="../lessons/appendix-glossary.html">缩写与术语表</a></li>
+<li>代码对照：每章的数字用 Python 算一遍</li>
+<li>材料清单</li>
+<li>前置：vla-deep-dive 面试资料 05–07（WAM、自主架构、Agentic VLA / WAM 全景）</li>
+</ul>
+<h2 id="_4">目录</h2>
+<table>
+<thead>
+<tr>
+<th>章</th>
+<th>主题</th>
+<th>一句话精要</th>
+<th>动画</th>
+<th>卡片</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="../lessons/01-self-improvement-loop.html">全景：RL 怎样让 VLA / WAM 自己变强</a></td>
+<td>生成 → 打分 → 更新；奖励变稠密、梯度变加权、想象要验证、agent 管闭环；RSI 四个层级</td>
+<td><a href="../animations/01-self-improvement-loop.gif">自改进闭环</a></td>
+<td>AR01–AR10</td>
+<td>✅ 讲解（练习待作答）</td>
+</tr>
+<tr>
+<td>2</td>
+<td>最小自改进闭环</td>
+<td>生成 → 筛选 → 训练；验证比生成容易</td>
+<td>—</td>
+<td>—</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>3</td>
+<td>让大模型当规划器</td>
+<td>SayCan、Inner Monologue、Code as Policies</td>
+<td>—</td>
+<td>—</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>4</td>
+<td>编排 + 执行</td>
+<td>Gemini Robotics 1.5、RoboOS</td>
+<td>—</td>
+<td>—</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>5</td>
+<td>VLA 当工具，VLA 自己调工具</td>
+<td>VLAs-as-Tools、ART、ECoT</td>
+<td>—</td>
+<td>—</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>6</td>
+<td>训练规划器本身</td>
+<td>AgenticRoboRL</td>
+<td>—</td>
+<td>—</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>7</td>
+<td>WAM 与 Agentic WAM</td>
+<td>DreamZero、LingBot-VA、AW-0</td>
+<td>—</td>
+<td>—</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>8</td>
+<td>奖励从哪来</td>
+<td>steps-to-go、RECAP、价值模型</td>
+<td>—</td>
+<td>—</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>9</td>
+<td>真机自练</td>
+<td>RoboClaw、FIND、PLD</td>
+<td>—</td>
+<td>—</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>10</td>
+<td>技能库自己长大</td>
+<td>RATs、ASPIRE、PRACTICE、SkillRL</td>
+<td>—</td>
+<td>—</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>11</td>
+<td>在想象里练</td>
+<td>World-VLA-Loop、RISE、MERL</td>
+<td>—</td>
+<td>—</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>12</td>
+<td>世界模型自己变好</td>
+<td>WAV、EVO-WAM、R²-WAM、Motus2</td>
+<td>—</td>
+<td>—</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>13</td>
+<td>风险与证据</td>
+<td>钻想象空子、奖励黑客、怎样证明递归增益</td>
+<td>—</td>
+<td>—</td>
+<td>⬜</td>
+</tr>
+<tr>
+<td>14</td>
+<td>总复盘</td>
+<td>一张图串起整个自改进系统</td>
+<td>—</td>
+<td>—</td>
+<td>⬜</td>
+</tr>
+</tbody>
+</table>
+<p>各章要回答的问题见 学习计划 · 讲义章节大纲。</p>
+<h2 id="_5">口诀汇总</h2>
+<ul>
+<li><strong>第 1 章</strong>：生成打分再更新，经验分数改了谁；模仿不会自纠错，稀疏奖励变稠密；大模型稳小模块探，想象要验 agent 管；验证容易闭环升，改进流程是第四层。</li>
+</ul>
+</main>
+<footer>来自个人学习仓库的对话讲义，含练习作答记录。源码：<a href="https://github.com/wikieden/self-improving-robots">github.com/wikieden/self-improving-robots</a>。更多讲义书：<a href="https://wikieden.github.io/ai-books/">Physical AI 0-1-♾️（合集）</a></footer>
+</body></html>

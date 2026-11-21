@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>agentic-vla-wam-rsi · 复习卡片 · RSI 与 WAM/VLA</title>
+<style>
+:root{--bg:#fbfbfa;--fg:#1f2328;--mute:#5d6470;--line:#e3e5e8;--card:#fff;--acc:#2f6fdf;--code:#f2f3f5;--quote:#f4f6fa}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15181d;--fg:#e4e7ec;--mute:#9aa3b2;--line:#2c323b;--card:#1c2026;--acc:#7aa7ff;--code:#22272f;--quote:#1b2029}}
+:root[data-theme="dark"]{--bg:#15181d;--fg:#e4e7ec;--mute:#9aa3b2;--line:#2c323b;--card:#1c2026;--acc:#7aa7ff;--code:#22272f;--quote:#1b2029}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.75 -apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Helvetica Neue",sans-serif}
+a{color:var(--acc)}
+header.top{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+header.top .in{max-width:860px;margin:0 auto;padding:10px 16px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;font-size:14px}
+header.top .brand{font-weight:600;color:var(--fg);text-decoration:none;margin-right:auto}
+header.top a{text-decoration:none}
+main{max-width:860px;margin:0 auto;padding:24px 16px 72px;overflow-wrap:anywhere}
+h1{font-size:28px;line-height:1.35;margin:8px 0 16px} h2{font-size:22px;margin:40px 0 12px;padding-top:8px;border-top:1px solid var(--line)} h3{font-size:18px;margin:28px 0 8px}
+img{max-width:100%;height:auto;border-radius:8px;border:1px solid var(--line);background:#fff}
+blockquote{margin:16px 0;padding:10px 16px;background:var(--quote);border-left:3px solid var(--acc);border-radius:4px;color:var(--mute)}
+blockquote p{margin:4px 0}
+code{background:var(--code);padding:1px 5px;border-radius:4px;font-size:.9em}
+pre{background:var(--code);padding:12px 14px;border-radius:8px;overflow-x:auto} pre code{padding:0;background:none}
+table{border-collapse:collapse;display:block;overflow-x:auto;max-width:100%;margin:12px 0;font-size:15px}
+th,td{border:1px solid var(--line);padding:6px 10px;vertical-align:top} th{background:var(--code)}
+details{border:1px solid var(--line);border-radius:8px;padding:6px 12px;margin:8px 0;background:var(--card)}
+details[open]{padding-bottom:10px} summary{cursor:pointer;color:var(--acc);font-weight:500}
+mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+.btn{display:inline-block;margin:4px 8px 4px 0;padding:6px 14px;border:1px solid var(--acc);border-radius:999px;text-decoration:none;font-size:14px}
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:48px;padding-top:16px;border-top:1px solid var(--line);font-size:15px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin:16px 0}
+.card{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;color:inherit;text-decoration:none}
+.card:hover{border-color:var(--acc)} .card img{border:0;border-bottom:1px solid var(--line);border-radius:0;aspect-ratio:16/10;object-fit:contain;width:100%}
+.card .no{color:var(--mute);font-size:13px;padding:8px 12px 0} .card .t{padding:0 12px 12px;font-weight:500;line-height:1.5}
+.lead{font-size:17px;color:var(--mute)}
+footer{max-width:860px;margin:0 auto;padding:0 16px 40px;color:var(--mute);font-size:13px}
+</style>
+<script>window.MathJax={tex:{inlineMath:[["\\(","\\)"]],displayMath:[["\\[","\\]"],["$$","$$"]],processEscapes:true,processEnvironments:true}};</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+</head><body>
+<header class="top"><div class="in">
+<a class="brand" href="index.html">RSI 与 WAM/VLA</a>
+<a href="lessons/index.html">讲义目录</a>
+<a href="animations/index.html">动画</a>
+<a href="review.html">复习卡片</a>
+<a href="lessons/appendix-glossary.html">缩写表</a>
+<a href="https://wikieden.github.io/ai-books/">← 全部讲义书</a>
+</div></header>
+<main>
+<h1 id="agentic-vla-wam-rsi">agentic-vla-wam-rsi · 复习卡片</h1>
+<p>讲解中卡住、追问、答错的地方，以及必须记住的公式和符号，都会自动追加到这里。每张卡片的"来源"链接到 <a href="lessons/index.html">lessons/</a> 里对应的讲义章节，忘了就回去重读那一章。卡片编号 AR01 起。</p>
+<h2 id="_1">怎么用</h2>
+<ol>
+<li>先只看<strong>问题</strong>，自己说出或写出答案；</li>
+<li>再点开"答案"核对；</li>
+<li>答对了，在"复习记录"里补一个日期；答错了就当天再看一遍。</li>
+</ol>
+<p><strong>复习间隔</strong>（按答对的次数）：第 1 次 → 隔 1 天 → 隔 3 天 → 隔 7 天 → 隔 14 天 → 隔 30 天。连续答对 5 次的卡片移到文末"已掌握"。</p>
+<p>想复习时说一声"复习"，我会挑到期的卡片来考你。</p>
+<hr />
+<h2 id="_2">闭环与奖励</h2>
+<h3 id="ar01-agenticwamrsi">AR01 · 读一篇"机器人自改进"论文时，先问哪三个问题？三个词 Agentic、WAM、RSI 各管闭环的哪一部分？</h3>
+<p>来源：<a href="lessons/01-self-improvement-loop.html">第 1 章</a> · 加入 2026-11-20 · 复习记录：</p>
+<details>
+<summary>答案</summary>
+<p>闭环：<span class="arithmatex">\(\theta_{k+1} = \mathrm{Update}(\theta_k, \mathrm{Filter}(\mathrm{Generate}(\theta_k)))\)</span>，即生成 → 打分 → 更新。</p>
+<p>三问：经验从哪来（真机 / 仿真 / 想象）；分数从哪来（0/1、进度、价值、VLM 判官）；被更新的是什么（VLA 权重、残差、规划器、技能库、世界模型）。</p>
+<p>Agentic 管"谁来驱动闭环"（选练什么、重置、判成败）；WAM 管"在想象里跑闭环"；RSI 问"闭环能不能一轮比一轮强"。</p>
+<p>口诀：生成打分再更新，经验分数改了谁。</p>
+</details>
+<h3 id="ar02-vla-00250">AR02 · VLA 只靠模仿学习，为什么学不会纠错？每步偏离概率 0.02、50 步，至少偏离一次的概率是多少？</h3>
+<p>来源：<a href="lessons/01-self-improvement-loop.html">第 1 章</a> 第二步 · 加入 2026-11-20 · 复习记录：</p>
+<details>
+<summary>答案</summary>
+<p>暴露偏差：示范只覆盖专家走过的状态。机器人一旦偏离，就到了示范里没有的状态，不会纠正，误差越积越大（RISE 引言 L84–L89）。</p>
+<p>整条不偏的概率是 <span class="arithmatex">\((1-q)^T = 0.98^{50} \approx 0.364\)</span>，所以至少偏一次约 63.6%。</p>
+<p>真机 RL 的四个难点：贵、要人重置、要人判成败、有安全风险。</p>
+<p>口诀：模仿不会自纠错。</p>
+</details>
+<h3 id="ar03-rl-r_t-go_t-go_t1-g">AR03 · 机器人 RL 的奖励有哪四种来源？进度奖励 <span class="arithmatex">\(r_t = g(o_t) - g(o_{t+1})\)</span> 里 <span class="arithmatex">\(g\)</span> 是什么？</h3>
+<p>来源：<a href="lessons/01-self-improvement-loop.html">第 1 章</a> 第三步 · 加入 2026-11-20 · 复习记录：</p>
+<details>
+<summary>答案</summary>
+<p>四种：0/1 结果奖励（SimpleVLA-RL）；steps-to-go 步数预测（Self-Improving EFM，同时当稠密奖励和成功检测器）；价值模型 + 优势（π*0.6 RECAP）；混合稠密奖励（IG-RFT，轨迹级 + 子任务级）。</p>
+<p><span class="arithmatex">\(g(o_t)\)</span> 是模型在观察 <span class="arithmatex">\(o_t\)</span> 上预测的"离完成还差几步"。例：<span class="arithmatex">\(g\)</span> = 10, 8, 8, 5 → <span class="arithmatex">\(r\)</span> = 2, 0, 3（示意形式，第 8 章核对原文）。</p>
+<p>优势 <span class="arithmatex">\(A = Q - V\)</span>：比平常好多少。</p>
+<p>口诀：稀疏奖励变稠密。</p>
+</details>
+<h2 id="_3">优化方式</h2>
+<h3 id="ar04-awr-a-1-0-1beta-1">AR04 · 写出 AWR 的样本权重公式；<span class="arithmatex">\(A = +1, 0, -1\)</span>、<span class="arithmatex">\(\beta = 1\)</span> 时权重各是多少？"优势条件"又是怎么做的？</h3>
+<p>来源：<a href="lessons/01-self-improvement-loop.html">第 1 章</a> 第四步 · 加入 2026-11-20 · 复习记录：</p>
+<details>
+<summary>答案</summary>
+<p><span class="arithmatex">\(w = \exp(A/\beta)\)</span>，<span class="arithmatex">\(\beta\)</span> 是温度。权重是 2.718、1、0.368，好样本的权重是差样本的 7.4 倍。</p>
+<p>优势条件（RECAP、RISE）：训练时把 <span class="arithmatex">\(I = \mathbb{1}[A &gt; 0]\)</span> 当作输入条件，推理时固定 <span class="arithmatex">\(I = 1\)</span>，只生成"比平常好"的动作。</p>
+<p>两者都是"保留监督学习的训练方式，只把优势当权重或条件"。</p>
+<p>口诀：梯度变加权。</p>
+</details>
+<h3 id="ar05-pld">AR05 · PLD 的三个阶段各做什么？为什么叫"大模型稳着学，小模块去探路"？</h3>
+<p>来源：<a href="lessons/01-self-improvement-loop.html">第 1 章</a> 第四步 · 加入 2026-11-20 · 复习记录：</p>
+<details>
+<summary>答案</summary>
+<p>PLD = Probe, Learn, Distill（探测 / 学习 / 蒸馏），<code>pld-residual-rl</code> L20–L28：
+1. 冻结 VLA，用 off-policy RL 训练小残差 <span class="arithmatex">\(a = a_{\text{base}} + a_{\text{res}}\)</span>，在基础策略会失败的地方接管（探测失败区）；
+2. 收集数据时让残差介入偏向基础策略常去的状态（分布对齐），录下纠正行为；
+3. 用 SFT 把这些数据蒸馏回大模型。LIBERO 上约 99%。</p>
+<p>探索交给小模块，大模型只吸收筛过的数据，训练稳定，不洗掉预训练学到的能力。FIND 也用"冻结 π0.5 + 残差 RL"。</p>
+<p>口诀：大模型稳小模块探。</p>
+</details>
+<h2 id="wam-agentic">WAM 与 Agentic</h2>
+<h3 id="ar06-motus2-wam-rl">AR06 · Motus2 说 WAM 一套权重暴露哪三个接口？各对应 RL 里的什么角色？</h3>
+<p>来源：<a href="lessons/01-self-improvement-loop.html">第 1 章</a> 第五步 · 加入 2026-11-20 · 复习记录：</p>
+<details>
+<summary>答案</summary>
+<p>策略（world–action model，提出候选动作块）→ actor；模拟器（action-conditioned world model，预测视觉后果）→ 环境模型；评估器（value model，给预测结果打分）→ critic / 奖励。三者串起来就是 model-based RL 回路（<code>motus2</code> L25–L27）。</p>
+<p>代表：RISE = 可控动力学 + 进度价值模型，在想象里算优势。</p>
+<p>口诀：想象里练。</p>
+</details>
+<h3 id="ar07-wavevo-wamr2-wammerl">AR07 · 在世界模型里练，策略会怎样"钻想象的空子"？WAV、EVO-WAM、R²-WAM、MERL 各用什么办法防？</h3>
+<p>来源：<a href="lessons/01-self-improvement-loop.html">第 1 章</a> 第五步 · 加入 2026-11-20 · 复习记录：</p>
+<details>
+<summary>答案</summary>
+<p>想象出的画面看起来像成功，但不一定忠实反映输入的动作；策略会专挑世界模型预测错的地方得高分。</p>
+<ul>
+<li>WAV：拆成"状态合理吗 + 动作能到达吗"两件事分别验证，靠两种不对称（无动作视频多；动作相关特征维度低），再加逆模型循环一致性。</li>
+<li>EVO-WAM：VLM 挑完成任务的前缀 + IDM 核对视频–动作一致，再自训（Cosmos3 26.9% → 68.0%）。</li>
+<li>R²-WAM：先修（让想象服从动作），再拒（对想象进度不如示范的样本做负向微调）。</li>
+<li>MERL：按可信度控制想象数据比例和时域。</li>
+</ul>
+<p>口诀：想象要验。</p>
+</details>
+<h3 id="ar08-agentic-rl">AR08 · Agentic 和 RL 有哪两种结合方式？各举一个代表和关键数字。</h3>
+<p>来源：<a href="lessons/01-self-improvement-loop.html">第 1 章</a> 第六步 · 加入 2026-11-20 · 复习记录：</p>
+<details>
+<summary>答案</summary>
+<p>A. Agent 当 RL 的"操作员"，把人从闭环里拿掉：FIND（VLM 按场景和近期成功率选任务、用前后观察判成败，55% → 71.9%，6 小时 456 个 episode、30 次救场、无人工奖励标签）；RoboClaw（EAP 正向 + 逆向配对自重置，人力时间 −53.7%）。</p>
+<p>B. 用 RL 训练规划器本身：AgenticRoboRL（SFT + 多轮 RL，只给结束时奖励、组内相对优势、执行层不动；9B 规划器 18.1% → 71.0%，接近 Codex + 记忆的 72.1%）。</p>
+<p>组内相对优势 <span class="arithmatex">\(A_i = r_i - \bar r\)</span>；全成功或全失败的组优势全为 0，学不到东西。</p>
+<p>口诀：agent 管闭环，规划器也能练。</p>
+</details>
+<h2 id="rsi">RSI 层级</h2>
+<h3 id="ar09">AR09 · 递归自改进的四个层级是什么？为什么说"执行上自主 ≠ 改进上自主"？</h3>
+<p>来源：<a href="lessons/01-self-improvement-loop.html">第 1 章</a> 第七步 · 加入 2026-11-20 · 复习记录：</p>
+<details>
+<summary>答案</summary>
+<p>L1 episode 内纠正（SC-VLA、Inner Monologue）；L2 持久改进，写进权重或技能库（RECAP、PLD、RoboClaw）；L3 版本继承、多轮迭代（Self-Improving EFM、EVO-WAM）；L4 改进流程本身变好（具身几乎没有；软件 agent 有 Darwin Gödel Machine）。</p>
+<p>机器人能自己干活、自己采数据，只说明执行自主；只有"产生改进的流程"本身在变好，才算改进自主。有技能库也不等于 RSI。</p>
+<p>口诀：改进流程是第四层。</p>
+</details>
+<h3 id="ar10-fp-fn">AR10 · 自改进闭环什么时候往上走、什么时候往下掉？（筛选器的误收率 fp、漏收率 fn）</h3>
+<p>来源：<a href="lessons/01-self-improvement-loop.html">第 1 章</a> 动画 · 加入 2026-11-20 · 复习记录：</p>
+<details>
+<summary>答案</summary>
+<p>收下样本的成功率 precision <span class="arithmatex">\(= \dfrac{p(1-\text{fn})}{p(1-\text{fn}) + (1-p)\,\text{fp}}\)</span>，更新 <span class="arithmatex">\(p \leftarrow (1-\eta)p + \eta \cdot \text{precision}\)</span>。</p>
+<p>precision &gt; p ⇔ fp &lt; 1 − fn：筛选器比瞎猜好就往上走，越准越快；fp &gt; 1 − fn 就往下掉（奖励黑客的玩具版）；不筛选时 precision = p，原地不动。</p>
+<p>这就是"验证比生成容易"为什么是闭环的前提。</p>
+<p>口诀：验证容易闭环升。</p>
+</details>
+<hr />
+<h2 id="_4">已掌握</h2>
+</main>
+<footer>来自个人学习仓库的对话讲义，含练习作答记录。源码：<a href="https://github.com/wikieden/self-improving-robots">github.com/wikieden/self-improving-robots</a>。更多讲义书：<a href="https://wikieden.github.io/ai-books/">Physical AI 0-1-♾️（合集）</a></footer>
+</body></html>
